@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import githubService from '../services/GithubServiceReal';
+import githubService from '../services';
+import ErrorMessage from '../components/ErrorMessage';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 function RepoDetailsScreen() {
   const { name } = useParams(); // repo ime
@@ -14,7 +16,7 @@ function RepoDetailsScreen() {
 
   useEffect(() => {
     if (!username || !name) {
-      setError('Missing repository or user information.');
+      setError('Missing repository or user information: ' + err);
       return;
     }
 
@@ -27,7 +29,7 @@ function RepoDetailsScreen() {
         setRepo(repoData);
         setTags(tagData);
       } catch (err) {
-        setError('Failed to load repository details');
+        setError('Failed to load repository details: ' + err);
       } finally {
         setLoading(false);
       }
@@ -36,8 +38,8 @@ function RepoDetailsScreen() {
     fetchData();
   }, [username, name]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div style={{ color: 'red' }}>{error}</div>;
+  if (loading) return <LoadingSpinner />;
+  if (error) return <ErrorMessage message={error} />;
   if (!repo) return null;
 
   return (
