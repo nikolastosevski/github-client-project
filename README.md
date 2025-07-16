@@ -51,3 +51,19 @@ src/
 
 ## ✅ Licence
 This project is open source and free to use and modify.
+
+
+
+## 📸 Screenshots
+
+### User Repos - Dark
+![User Repos - Dark](/screenshots/user_repos_dark.png)
+
+### Repo Details - Dark
+![Repo Details - Dark](/screenshots/repo_details_dark.png)
+
+### User Repos - Light
+![User Repos - Light](/screenshots/user_repos_light.png)
+
+### Repo Details - Light
+![Repo Details - Light](/screenshots/repo_details_light.png)
