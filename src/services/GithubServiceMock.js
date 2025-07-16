@@ -1,6 +1,8 @@
 import IGithubService from './IGithubService';
 
 class GithubServiceMock extends IGithubService {
+
+  // Vraćanje svih repozitorijuma za korisnika GitHub-a - TEST
   async getUserRepos(username, page = 1) {
     return [
       {
@@ -51,81 +53,10 @@ class GithubServiceMock extends IGithubService {
           avatar_url: 'https://via.placeholder.com/100',
         }
       },
-      {
-        id: 5,
-        name: 'mock-repo5',
-        description: 'This is a mock repository1',
-        stargazers_count: 11,
-        forks_count: 11,
-        watchers_count: 11,
-        owner: {
-          login: username,
-          avatar_url: 'https://via.placeholder.com/100',
-        }
-      },
-      {
-        id: 6,
-        name: 'mock-repo6',
-        description: 'This is a mock repository1',
-        stargazers_count: 11,
-        forks_count: 11,
-        watchers_count: 11,
-        owner: {
-          login: username,
-          avatar_url: 'https://via.placeholder.com/100',
-        }
-      },
-      {
-        id: 7,
-        name: 'mock-repo7',
-        description: 'This is a mock repository1',
-        stargazers_count: 11,
-        forks_count: 11,
-        watchers_count: 11,
-        owner: {
-          login: username,
-          avatar_url: 'https://via.placeholder.com/100',
-        }
-      },
-      {
-        id: 8,
-        name: 'mock-repo8',
-        description: 'This is a mock repository1',
-        stargazers_count: 11,
-        forks_count: 11,
-        watchers_count: 11,
-        owner: {
-          login: username,
-          avatar_url: 'https://via.placeholder.com/100',
-        }
-      },
-      {
-        id: 9,
-        name: 'mock-repo9',
-        description: 'This is a mock repository1',
-        stargazers_count: 11,
-        forks_count: 11,
-        watchers_count: 11,
-        owner: {
-          login: username,
-          avatar_url: 'https://via.placeholder.com/100',
-        }
-      },
-      {
-        id: 10,
-        name: 'mock-repo10',
-        description: 'This is a mock repository1',
-        stargazers_count: 11,
-        forks_count: 11,
-        watchers_count: 11,
-        owner: {
-          login: username,
-          avatar_url: 'https://via.placeholder.com/100',
-        }
-      },
     ];
   }
 
+  // Vraćanje detalja izabranog repozitorijuma - TEST
   async getRepoDetails(username, repoName) {
     return {
       name: repoName,
@@ -139,6 +70,7 @@ class GithubServiceMock extends IGithubService {
     };
   }
 
+  // Vraćanje tagova izabranog repozitorijuma - TEST
   async getRepoTags(username, repoName) {
     return [
       { name: 'v1.0.0', commit: { sha: 'abc123' } },

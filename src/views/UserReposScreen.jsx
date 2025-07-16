@@ -4,7 +4,7 @@ import RepoCard from '../components/RepoCard';
 import ErrorMessage from '../components/ErrorMessage';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-//Definisanje funkcije za prikaz stranice sa korisničkim repozitorijumima.
+// Definisanje funkcije za prikaz stranice sa korisničkim repozitorijumima.
 function UserReposScreen({ username }) {
   const [repos, setRepos] = useState([]);
   const [page, setPage] = useState(1);
@@ -12,7 +12,7 @@ function UserReposScreen({ username }) {
   const [error, setError] = useState('');
   const [hasMore, setHasMore] = useState(true);
 
-  //Funkcija koja se inicijalno pokreće prilikom pokretanja
+  // Funkcija koja se inicijalno pokreće prilikom otvaranja stranice
   useEffect(() => {
     setRepos([]);
     setPage(1);
@@ -22,17 +22,17 @@ function UserReposScreen({ username }) {
     loadRepos();
   }, [username, page]);
 
-  //Metoda se uvek poziva dva puta zbog taga React.StrictMode koji je postavljen u main.jsx
-  //Iz tog razloga potrebno je obraditi duplikate
+  // Metoda se uvek poziva dva puta zbog taga React.StrictMode koji je postavljen u main.jsx
+  // Iz tog razloga potrebno je obraditi duplikate!
   const loadRepos = async () => {
     try {
-      //Prikaz učitavanja
+      // Prikaz učitavanja
       setLoading(true);
 
-      //Preuzimanje podataka (pravih ili mokovanih)
+      // Preuzimanje podataka (pravih ili mokovanih)
       const data = await githubService.getUserRepos(username, page);
 
-      //Postavljanje prikaza repozitorijuma za korisnika
+      // Postavljanje prikaza repozitorijuma za korisnika
       setRepos(prev => {
         const existingIds = new Set(prev.map(r => r.id));
         const unique = data.filter(repo => !existingIds.has(repo.id));
@@ -43,16 +43,17 @@ function UserReposScreen({ username }) {
     } catch (err) {
       setError('Greška prilikom učitavanja repozitorijuma:' + err);
     } finally {
-      //Zatvaranje učitavanja
+      // Zatvaranje učitavanja
       setLoading(false);
     }
   };
 
+  // Hendlovanje učitavanja podataka sa sledeće strane
   const loadNextPage = () => {
     setPage(prev => prev + 1);
   }
 
-  //Stranica
+  // Stranica
   return (
   <div className="max-w-4xl mx-auto px-4 py-6">
 
@@ -77,13 +78,7 @@ function UserReposScreen({ username }) {
         <button
           onClick={loadNextPage}
           disabled={loading}
-          className="
-            px-6 py-2 rounded bg-blue-600 text-white font-medium
-            hover:bg-blue-700
-            disabled:bg-gray-400 dark:disabled:bg-gray-600
-            transition-colors duration-200
-          "
-        >
+          className="px-6 py-2 rounded bg-blue-600 text-white font-medium hover:bg-blue-700 disabled:bg-gray-400 dark:disabled:bg-gray-600 transition-colors duration-200">
           {loading ? (
             <div className="flex items-center justify-center gap-2">
               <LoadingSpinner />

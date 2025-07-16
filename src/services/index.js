@@ -1,4 +1,5 @@
-// Ovde samo menjaš import da pređeš na mock
+//Switch za mokovanje API-ja, ove izmeniti klasu kako bi se prikazivali testni podaci
+
 import GithubServiceReal from './GithubServiceReal';
 //import GithubServiceMock from './GithubServiceMock';
 

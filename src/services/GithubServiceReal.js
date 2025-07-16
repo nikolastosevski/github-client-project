@@ -1,7 +1,10 @@
 import axiosInstance from '../api/axiosInstance';
 import IGithubService from './IGithubService';
 
+// Klasa za pozivanje pravih API metoda
 class GithubServiceReal extends IGithubService {
+
+  // Vraćanje svih repozitorijuma za korisnika GitHub-a
   async getUserRepos(username, page = 1) {
     const response = await axiosInstance.get(`/users/${username}/repos`, {
       params: {
@@ -12,11 +15,13 @@ class GithubServiceReal extends IGithubService {
     return response.data;
   }
 
+  // Vraćanje detalja izabranog repozitorijuma
   async getRepoDetails(username, repoName) {
     const response = await axiosInstance.get(`/repos/${username}/${repoName}`);
     return response.data;
   }
 
+   // Vraćanje tagova izabranog repozitorijuma
   async getRepoTags(username, repoName) {
     const response = await axiosInstance.get(`/repos/${username}/${repoName}/tags`);
     return response.data;

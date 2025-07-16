@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import ReactLogo from '../assets/react.svg';
 
+// Komponenta koja prikazuje navbar na vrhu svih stranica
 function Navbar({ onSearch, onToggleTheme, currentTheme }) {
-  const [inputValue, setInputValue] = useState('octocat');
+  const [inputValue, setInputValue] = useState('octocat');      // Hendlovanje unešeno username-a, default = octocat
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e) => {                                 // Hendlovanje klika na dugme za pretragu repo-a unešenog user-a
     e.preventDefault();
     if (inputValue.trim()) {
       onSearch(inputValue.trim());
@@ -12,12 +14,13 @@ function Navbar({ onSearch, onToggleTheme, currentTheme }) {
 
   return (
     <nav className="bg-gray-50 dark:bg-gray-800 shadow px-6 py-4 flex justify-between items-center sticky top-0 z-50">
-      {/* Leva strana - naziv projekta */}
-      <h1 className="text-xl font-bold text-blue-600 dark:text-blue-400">
-        GitHub Explorer
-      </h1>
+      {/* Leva strana - ikonica i naziv projekta */}
+      <div className="flex items-center gap-2">
+        <img src={ReactLogo} alt="React Logo" className="h-6 w-6" />
+        <h1 className="text-xl font-bold text-blue-600 dark:text-blue-400">GitHub Explorer</h1>
+      </div>
 
-      {/* Desna strana - pretraga i toggle */}
+      {/* Desna strana - pretraga i toggle za temu */}
       <div className="flex items-center gap-4">
         <form onSubmit={handleSubmit} className="flex items-center gap-2">
           <input
@@ -35,11 +38,9 @@ function Navbar({ onSearch, onToggleTheme, currentTheme }) {
           </button>
         </form>
 
-        {/* Toggle dugme */}
+        {/* Toggle dugme - TODO: Možemo staviti i u posebnu komponentu */}
         <button
-          onClick={onToggleTheme}
-          className="text-sm px-2 py-1 border border-gray-400 dark:border-gray-600 rounded text-gray-200 dark:text-gray-900 bg-gray-900 dark:bg-gray-200" 
-        >
+          onClick={onToggleTheme} className="text-sm px-2 py-1 border border-gray-400 dark:border-gray-600 rounded text-gray-200 dark:text-gray-900 bg-gray-900 dark:bg-gray-200">
           {currentTheme === 'dark' ? '🌞 Light' : '🌙 Dark'}
         </button>
       </div>

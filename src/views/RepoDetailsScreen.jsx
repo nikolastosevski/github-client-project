@@ -4,22 +4,25 @@ import githubService from '../services';
 import ErrorMessage from '../components/ErrorMessage';
 import LoadingSpinner from '../components/LoadingSpinner';
 
+// Definisanje funkcije za prikaz stranice sa detaljima izabranog repozitorijuma.
 function RepoDetailsScreen() {
-  const { name } = useParams(); // repo ime
-  const location = useLocation();
-  const username = new URLSearchParams(location.search).get('user');
+  const { name } = useParams();                                           // Naziv repo-a
+  const location = useLocation();                                         // Lokacija korisnika na sajtu
+  const username = new URLSearchParams(location.search).get('user');      // Korisničko ime prikupljeno kroz URL umesto kao parametar
 
-  const [repo, setRepo] = useState(null);
-  const [tags, setTags] = useState([]);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [repo, setRepo] = useState(null);                                 // Objekat sa podacima o repo-u
+  const [tags, setTags] = useState([]);                                   // Lista tagova
+  const [error, setError] = useState('');                                 // Greška prilikom učitavanja
+  const [loading, setLoading] = useState(true);                           // Učitavanje stranice
 
+  // Funkcija koja se inicijalno pokreće prilikom pokretanja
   useEffect(() => {
     if (!username || !name) {
       setError('Missing repository or user information.');
       return;
     }
 
+    // Preuzimanje podataka preko API-ja i prikaz na stranici
     const fetchData = async () => {
       try {
         const [repoData, tagData] = await Promise.all([
@@ -35,15 +38,18 @@ function RepoDetailsScreen() {
       }
     };
 
+    // Preuzimanje podataka odmah po loadovanju
     fetchData();
   }, [username, name]);
 
+  // Postavljanje loading-a, greške ili praznog ekrana ako repo ne postoji
   if (loading) return <div className="flex justify-center mt-8"><LoadingSpinner /></div>;
   if (error) return <ErrorMessage message={error} />;
   if (!repo) return null;
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">
+
       {/* HEADER */}
       <header className="flex items-center gap-4 mb-6">
         <img
