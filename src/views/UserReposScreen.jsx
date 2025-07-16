@@ -5,8 +5,7 @@ import ErrorMessage from '../components/ErrorMessage';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 //Definisanje funkcije za prikaz stranice sa korisničkim repozitorijumima.
-function UserReposScreen() {
-  const username = 'octocat'; // Za test, kasnije može biti input polje na stranici.
+function UserReposScreen({ username }) {
   const [repos, setRepos] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -15,8 +14,13 @@ function UserReposScreen() {
 
   //Funkcija koja se inicijalno pokreće prilikom pokretanja
   useEffect(() => {
+    setRepos([]);
+    setPage(1);
+    setHasMore(true);
+    setError('');
+
     loadRepos();
-  }, [page]);
+  }, [username, page]);
 
   //Metoda se uvek poziva dva puta zbog taga React.StrictMode koji je postavljen u main.jsx
   //Iz tog razloga potrebno je obraditi duplikate
@@ -50,28 +54,51 @@ function UserReposScreen() {
 
   //Stranica
   return (
-    <div style={{ padding: 20 }}>
+  <div className="max-w-4xl mx-auto px-4 py-6">
 
-      {/* Prikaz naslova na stranici */}
-      <h1>{username}'s Repositories</h1>
+    {/* Naslov stranice */}
+    <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">
+      {username}'s Repositories
+    </h1>
 
-      {/* Prikaz preuzetih repozitorijuma u listi */}
+    {/* Lista repozitorijuma */}
+    <div className="space-y-4">
       {repos.map(repo => (
         <RepoCard key={repo.id} repo={repo} username={username} />
       ))}
-
-      {/* Prikaz greške ukolimo postoji */}
-      {error && <ErrorMessage message={error} />}
-
-      {/* Prikaz dugmeta za učitavanje preostalih repozitorijuma */}
-      {hasMore && (
-        <button onClick={loadNextPage} disabled={loading}>
-          {loading && <LoadingSpinner />}
-        </button>
-      )}
-
     </div>
-  );
+
+    {/* Prikaz greške */}
+    {error && <ErrorMessage message={error} />}
+
+    {/* Dugme za učitavanje sledeće stranice */}
+    {hasMore && (
+      <div className="mt-6 text-center">
+        <button
+          onClick={loadNextPage}
+          disabled={loading}
+          className="
+            px-6 py-2 rounded bg-blue-600 text-white font-medium
+            hover:bg-blue-700
+            disabled:bg-gray-400 dark:disabled:bg-gray-600
+            transition-colors duration-200
+          "
+        >
+          {loading ? (
+            <div className="flex items-center justify-center gap-2">
+              <LoadingSpinner />
+              Loading...
+            </div>
+          ) : (
+            'Load More'
+          )}
+        </button>
+      </div>
+    )}
+
+  </div>
+);
+
 }
 
 export default UserReposScreen;

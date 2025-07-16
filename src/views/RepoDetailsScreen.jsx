@@ -7,7 +7,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 function RepoDetailsScreen() {
   const { name } = useParams(); // repo ime
   const location = useLocation();
-  const username = new URLSearchParams(location.search).get('user'); // korisnik iz query stringa
+  const username = new URLSearchParams(location.search).get('user');
 
   const [repo, setRepo] = useState(null);
   const [tags, setTags] = useState([]);
@@ -16,7 +16,7 @@ function RepoDetailsScreen() {
 
   useEffect(() => {
     if (!username || !name) {
-      setError('Missing repository or user information: ' + err);
+      setError('Missing repository or user information.');
       return;
     }
 
@@ -38,38 +38,42 @@ function RepoDetailsScreen() {
     fetchData();
   }, [username, name]);
 
-  if (loading) return <LoadingSpinner />;
+  if (loading) return <div className="flex justify-center mt-8"><LoadingSpinner /></div>;
   if (error) return <ErrorMessage message={error} />;
   if (!repo) return null;
 
   return (
-    <div style={{ padding: 20 }}>
-      <header style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+    <div className="max-w-4xl mx-auto px-4 py-6">
+      {/* HEADER */}
+      <header className="flex items-center gap-4 mb-6">
         <img
           src={repo.owner.avatar_url}
           alt="Avatar"
-          width={60}
-          height={60}
-          style={{ borderRadius: '50%', marginRight: 20 }}
+          className="w-16 h-16 rounded-full border border-gray-300 dark:border-gray-600"
         />
         <div>
-          <h2>{repo.owner.login}</h2>
-          <h3>{repo.name}</h3>
-          <p>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">{repo.owner.login}</h2>
+          <h3 className="text-lg text-blue-600 dark:text-blue-400 font-medium">{repo.name}</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
             ⭐ {repo.stargazers_count} | 🍴 {repo.forks_count} | 👀 {repo.watchers_count}
           </p>
         </div>
       </header>
 
-      <h4>Tags</h4>
-      <div style={{ maxHeight: '300px', overflowY: 'auto', border: '1px solid #ccc', padding: 10 }}>
-        {tags.length === 0 && <p>No tags available.</p>}
-        {tags.map(tag => (
-          <div key={tag.name} style={{ marginBottom: 10 }}>
-            <strong>{tag.name}</strong>: {tag.commit.sha}
-          </div>
-        ))}
-      </div>
+      {/* TAGOVI */}
+      <section>
+        <h4 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">Tags</h4>
+        <div className="max-h-64 overflow-y-auto rounded border border-gray-300 dark:border-gray-700 p-4 bg-gray-50 dark:bg-gray-800 space-y-3">
+          {tags.length === 0 && (
+            <p className="text-sm text-gray-600 dark:text-gray-400">No tags available.</p>
+          )}
+          {tags.map(tag => (
+            <div key={tag.name} className="text-sm text-gray-800 dark:text-gray-200">
+              <strong>{tag.name}</strong>: <span className="break-all text-gray-600 dark:text-gray-400">{tag.commit.sha}</span>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

@@ -6,19 +6,23 @@ It allows users to view repositories of a specified user and explore detailed in
 ## 🚀 Features
 
 - Fetch and display GitHub repositories for a given user (default: `octocat`)
-- Pagination ("Load More") for large repo lists
+- Pagination ("Load More") for large repository lists
 - Repository details screen with:
   - Owner avatar and username
-  - Repo stats (stars, forks, watchers)
+  - Repository stats (stars, forks, watchers)
   - List of tags with commit SHA
-- Modular architecture with service abstraction for easy testing
+- Search functionality in the navigation bar to load repositories for any GitHub user
+- Dark/Light mode toggle with persistence in `localStorage`
+- Modular architecture with service abstraction for easy mocking and testing
+- React Router for navigation between screens
 
 ## 🧰 Tech Stack
 
-- React (via Vite)
-- React Router
-- Axios (with interceptors)
-- JavaScript (no TypeScript, per task request)
+- React (created with Vite)
+- React Router v6
+- Axios (with interceptors for error handling)
+- TailwindCSS for styling
+- JavaScript (no TypeScript, per task requirement)
 
 ## 📁 Project Structure
 
@@ -38,8 +42,12 @@ src/
 2. Run development server (npm run dev)
 3. Open in browser (http://localhost:5173)
 
-## 📦 To Do
+## 📦 Possible Future Improvement
+- Advanced error handling with Error Boundaries
+- Infinite scrolling instead of "Load More" button
+- Additional filtering and sorting options for repositories
+- Unit and integration tests
+- Authentication support for private repositories
 
-- TailwindCSS styling
-- Error boundary and fallback UI
-- Mock service for testing
+## ✅ Licence
+This project is open source and free to use and modify.
